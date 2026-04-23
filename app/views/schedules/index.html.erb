@@ -1,0 +1,65 @@
+<div class = "title_object">
+  <h1 class = "title">スケジュール管理アプリ</h1>
+</div>
+
+<div class = "container mt-3" style = "max-width: 900px;">
+
+  <div class = "d-flex justify-content-between align-items-center mb-3 pe-3">
+    <h2 class = "sub_title">予定一覧</h2>
+    <%= link_to new_schedule_path, class: "btn btn-success d-flex align-items-center gap-2 px-3" do %>
+      <i class = "bi bi-plus-circle"></i>新規追加
+    <% end %>
+  </div>
+
+  <div class= "table-responsive">
+    <table class= "table table-sm align-middle mb-0">
+      <thead class = "border-bottom small table-bordered">
+        <tr>
+          <th class = "text-center py-2 text-muted" style = "width:40px;">id</th>
+          <th class = "text-center py-2 text-muted text-nowrap">タイトル</th>
+          <th class = "text-center py-2 text-muted">開始日</th>
+          <th class = "text-center py-2 text-muted">終了日</th>
+          <th class = "text-center py-2 text-muted text-nowrap">終日</th>
+          <th class = "text-center py-2 text-muted">更新日時</th>
+          <th colspan = "3"></th>
+        </tr>
+      </thead>
+
+      <tbody class = "align-middle">
+        <% @schedules.each do |schedule| %>
+          <tr class = "border-bottom">
+            <td class = "text-center py-3 text-muted"><%= schedule.id %></td>
+            <td class = "text-center py-3 text-muted text-nowrap"><%= schedule.title %></td>
+            <td class = "text-center py-3 text-muted"><%= schedule.start_date.present? ? schedule.start_date.strftime("%Y/%m/%d") : "" %></td>
+            <td class = "text-center py-3 text-muted"><%= schedule.end_date.present? ? schedule.end_date.strftime("%Y/%m/%d") : "" %></td>
+            <td class = "text-center py-3 text-muted text-nowrap">
+              <span class = "fs-3 d-inline-block" style = "transform: translateY(-5px); height: 30px;">
+                <%= schedule.all_day ? "○" : "" %>
+              </span>
+            </td>
+            <td class= "text-center py-3 text-muted"><%= schedule.updated_at.present? ? schedule.updated_at.strftime("%Y/%m/%d %H:%M") : "" %></td> 
+
+            <td class = "text-center text-nowrap">
+              <div class = "d-flex justify-content-center gap-2 pe-2">
+                <%= link_to "詳細", schedule_path(schedule), class: "btn btn-sm  btn-outline-secondary px-3"%>
+                <%= link_to "編集", edit_schedule_path(schedule), class: "btn btn-sm btn-outline-secondary px-3" %>
+                <%= link_to "削除", schedule_path(schedule), class: "btn btn-sm btn-outline-secondary px-3", data: { turbo_method: :delete, turbo_confirm: "#{schedule.title}を削除してもよろしいですか？\nこの操作は取り消せません。"} %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class = "d-flex justify-content-between align-items-center mt-3 mb-4">
+    <h3 class = "fs-6 mb-0 ps-2" style = "font-weight:300;">
+      予定合計 <span class = "fw-bold fs-5"><%= @schedules.count %></span> 件
+    </h3>
+
+    <h3 class = "fs-6 mb-0 pe-4" style = "color: #9ca3af; font-weight:300;" >本日の日付
+      <%= Date.today.strftime("%Y/%m/%d") %>
+    </h3>
+  </div>
+</div>
+  
