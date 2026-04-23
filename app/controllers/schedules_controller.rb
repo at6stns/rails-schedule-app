@@ -5,7 +5,7 @@ class SchedulesController < ApplicationController
 
   def new
     @schedule = Schedule.new
-  end 
+  end
 
   def create
     @schedule = Schedule.new(schedule_params)

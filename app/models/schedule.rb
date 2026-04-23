@@ -1,5 +1,5 @@
 class Schedule < ApplicationRecord
-  validates :title, presence: true, length:{ maximum: 20 }
+  validates :title, presence: true, length: { maximum: 20 }
   validates :start_date, presence: true
   validates :end_date, presence: true
 
@@ -17,5 +17,4 @@ class Schedule < ApplicationRecord
       errors.add(:end_date, "終了日は開始日以降の日付で選択してください。")
     end
   end
-
 end
